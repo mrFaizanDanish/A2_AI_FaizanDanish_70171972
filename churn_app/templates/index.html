@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Churn Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+
+    <h1>Customer Churn Prediction</h1>
+    <p class="subtitle">Enter the customer details below and the model will predict whether the customer is likely to leave.</p>
+
+    {% if error %}
+      <div class="message error">
+        <strong>Input problem:</strong> {{ error }}
+      </div>
+    {% endif %}
+
+    {% if result == 'Churn' %}
+      <div class="message result churn">
+        <div class="result-title">Prediction: Churn</div>
+        <div class="result-text">This customer is likely to leave the company. Chance of churn: {{ probability }}%</div>
+      </div>
+    {% elif result == 'No Churn' %}
+      <div class="message result stay">
+        <div class="result-title">Prediction: No Churn</div>
+        <div class="result-text">This customer is likely to stay with the company. Chance of churn: {{ probability }}%</div>
+      </div>
+    {% endif %}
+
+    <form method="POST" action="/" novalidate>
+
+      <fieldset>
+        <legend>Customer</legend>
+        <div class="grid">
+
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender">
+              <option value="">-- Select --</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="SeniorCitizen">Senior Citizen</label>
+            <select name="SeniorCitizen" id="SeniorCitizen">
+              <option value="">-- Select --</option>
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="Partner">Has Partner</label>
+            <select name="Partner" id="Partner">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="Dependents">Has Dependents</label>
+            <select name="Dependents" id="Dependents">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Services</legend>
+        <div class="grid">
+
+          <div class="field">
+            <label for="PhoneService">Phone Service</label>
+            <select name="PhoneService" id="PhoneService">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="MultipleLines">Multiple Lines</label>
+            <select name="MultipleLines" id="MultipleLines">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No phone service">No phone service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="InternetService">Internet Service</label>
+            <select name="InternetService" id="InternetService">
+              <option value="">-- Select --</option>
+              <option value="DSL">DSL</option>
+              <option value="Fiber optic">Fiber optic</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="OnlineSecurity">Online Security</label>
+            <select name="OnlineSecurity" id="OnlineSecurity">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="OnlineBackup">Online Backup</label>
+            <select name="OnlineBackup" id="OnlineBackup">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="DeviceProtection">Device Protection</label>
+            <select name="DeviceProtection" id="DeviceProtection">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="TechSupport">Tech Support</label>
+            <select name="TechSupport" id="TechSupport">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="StreamingTV">Streaming TV</label>
+            <select name="StreamingTV" id="StreamingTV">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="StreamingMovies">Streaming Movies</label>
+            <select name="StreamingMovies" id="StreamingMovies">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="No internet service">No internet service</option>
+            </select>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Billing</legend>
+        <div class="grid">
+
+          <div class="field">
+            <label for="Contract">Contract</label>
+            <select name="Contract" id="Contract">
+              <option value="">-- Select --</option>
+              <option value="Month-to-month">Month-to-month</option>
+              <option value="One year">One year</option>
+              <option value="Two year">Two year</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="PaperlessBilling">Paperless Billing</label>
+            <select name="PaperlessBilling" id="PaperlessBilling">
+              <option value="">-- Select --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="PaymentMethod">Payment Method</label>
+            <select name="PaymentMethod" id="PaymentMethod">
+              <option value="">-- Select --</option>
+              <option value="Electronic check">Electronic check</option>
+              <option value="Mailed check">Mailed check</option>
+              <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+              <option value="Credit card (automatic)">Credit card (automatic)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="tenure">Tenure (months)</label>
+            <input type="number" name="tenure" id="tenure" min="0" max="72" step="1" placeholder="0 - 72">
+          </div>
+
+          <div class="field">
+            <label for="MonthlyCharges">Monthly Charges ($)</label>
+            <input type="number" name="MonthlyCharges" id="MonthlyCharges" min="0" max="200" step="0.01" placeholder="0 - 200">
+          </div>
+
+          <div class="field">
+            <label for="TotalCharges">Total Charges ($)</label>
+            <input type="number" name="TotalCharges" id="TotalCharges" min="0" max="10000" step="0.01" placeholder="0 - 10000">
+          </div>
+
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit">Predict Churn</button>
+        <a class="reset" href="/">Clear form</a>
+      </div>
+
+    </form>
+
+  </div>
+</body>
+</html>
